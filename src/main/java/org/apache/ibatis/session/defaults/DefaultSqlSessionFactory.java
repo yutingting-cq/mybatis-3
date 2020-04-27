@@ -36,6 +36,13 @@ import org.apache.ibatis.transaction.managed.ManagedTransactionFactory;
  */
 public class DefaultSqlSessionFactory implements SqlSessionFactory {
 
+  /**
+   * final关键字主要用在三个地方：变量、方法、类。
+   * 对于一个final变量，如果是基本数据类型的变量，则其数值一旦在初始化之后便不能更改；如果是引用类型的变量，则在对其初始化之后便不能再让其指向另一个对象。
+   * 当用final修饰一个类时，表明这个类不能被继承。final类中的所有成员方法都会被隐式地指定为final方法。
+   * 使用final方法的原因有两个。第一个原因是把方法锁定，以防任何继承类修改它的含义；第二个原因是效率。
+   * 类中所有的private方法都隐式地指定为final。
+   */
   private final Configuration configuration;
 
   public DefaultSqlSessionFactory(Configuration configuration) {
@@ -97,6 +104,10 @@ public class DefaultSqlSessionFactory implements SqlSessionFactory {
       return new DefaultSqlSession(configuration, executor, autoCommit);
     } catch (Exception e) {
       closeTransaction(tx); // may have fetched a connection so lets call close()
+      /**
+       * throw语句用来明确地抛出一个异常；
+       * throws用来声明一个方法可能抛出的各种异常
+       */
       throw ExceptionFactory.wrapException("Error opening session.  Cause: " + e, e);
     } finally {
       ErrorContext.instance().reset();
